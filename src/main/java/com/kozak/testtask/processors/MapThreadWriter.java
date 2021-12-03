@@ -1,6 +1,7 @@
 package com.kozak.testtask.processors;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
@@ -17,7 +18,10 @@ public class MapThreadWriter extends Thread {
     @Override
     public void run() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(System.getenv("DATA_FOLDER") + "/results/" + fileName));
+            File directory = new File(System.getenv("DATA_FOLDER") + "/results");
+            directory.mkdir();
+            File file = new File(directory + "/" + fileName);
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             for (Map.Entry<String, Long> entry : mapName.entrySet()) {
                 bw.write(entry.getKey() + " " + entry.getValue());
                 bw.newLine();
